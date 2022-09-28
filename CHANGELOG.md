@@ -1,3 +1,7 @@
+# v1.0.0-alpha.2
+
+- (feature) Add wire sets to all packages
+
 # v1.0.0-alpha.1
 
 - (feature) App package
