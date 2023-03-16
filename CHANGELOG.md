@@ -1,3 +1,8 @@
+# v1.0.0-alpha.3
+
+- (improvement) Fiber logger uses debug level
+- (improvement) Improve runtime and runtime logging
+
 # v1.0.0-alpha.2
 
 - (feature) Add wire sets to all packages

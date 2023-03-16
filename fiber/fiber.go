@@ -27,7 +27,7 @@ func NewFiber(options *NewFiberOptions) *fiber.App {
 
 	app.Use(fiberlog.New(fiberlog.Config{
 		Format: "${latency} - ${status} ${method} ${path}\n",
-		Output: options.Logger.Writer(),
+		Output: options.Logger.WriterLevel(logrus.DebugLevel),
 	}))
 
 	app.Use(errorMiddleware(options.Logger))
