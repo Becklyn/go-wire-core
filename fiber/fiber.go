@@ -23,7 +23,9 @@ type NewFiberOptions struct {
 }
 
 func NewFiber(options *NewFiberOptions) *fiber.App {
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		BodyLimit: env.IntWithDefault("HTTP_REQUEST_BODY_LIMIT", 4) * 1024 * 1024,
+	})
 
 	app.Use(fiberlog.New(fiberlog.Config{
 		Format: "${latency} - ${status} ${method} ${path}\n",

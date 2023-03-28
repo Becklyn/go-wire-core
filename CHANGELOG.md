@@ -1,3 +1,7 @@
+# v1.0.0-alpha.4
+
+- (feature) Set upload limit for files by environment variable HTTP_REQUEST_BODY_LIMIT
+
 # v1.0.0-alpha.3
 
 - (improvement) Fiber logger uses debug level

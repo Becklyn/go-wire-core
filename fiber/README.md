@@ -47,3 +47,9 @@ func newMiddlewareMap() *MiddlewareHandlerMap {
 ### Predefined middleware
 
 - `middleware.NoCors()` middleware that disables CORS for development environments
+
+### Used environment variables
+
+| variable name           | default | use                                   |
+| ----------------------- | ------- | ------------------------------------- |
+| HTTP_REQUEST_BODY_LIMIT | 4       | body size limit for all http requests |
