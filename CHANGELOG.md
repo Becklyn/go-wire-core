@@ -1,3 +1,7 @@
+# v1.0.1
+
+- (internal) Adjust logger format by `LOG_FORMAT` env variable
+
 # v1.0.0
 
 - (bc) Use golog instead of logrus

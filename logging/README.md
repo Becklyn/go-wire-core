@@ -15,3 +15,10 @@ Possible values:
 - `warn`
 - `error`
 - `fatal`
+
+The log format can be configured using the `LOG_FORMAT` env variable. Default is `console`.
+
+Possible values:
+
+- `console` (this is the default / fallback format)
+- `json`
