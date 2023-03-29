@@ -3,17 +3,17 @@ package readyness
 import (
 	"sync"
 
-	"github.com/sirupsen/logrus"
+	"github.com/fraym/golog"
 )
 
 type Service struct {
 	components map[string]bool
 
-	logger *logrus.Logger
+	logger golog.Logger
 	mux    sync.RWMutex
 }
 
-func New(logger *logrus.Logger) *Service {
+func New(logger golog.Logger) *Service {
 	return &Service{
 		components: make(map[string]bool),
 		logger:     logger,
@@ -51,9 +51,7 @@ func (s *Service) SetReady(component string) {
 
 	s.components[component] = true
 
-	s.logger.WithFields(logrus.Fields{
-		"component": component,
-	}).Info("Component is ready")
+	s.logger.Info().WithField("component", component).Write("Component is ready")
 }
 
 func (s *Service) Register(component string) {
@@ -62,7 +60,5 @@ func (s *Service) Register(component string) {
 
 	s.components[component] = false
 
-	s.logger.WithFields(logrus.Fields{
-		"component": component,
-	}).Info("Registered unready component")
+	s.logger.Info().WithField("component", component).Write("Registered unready component")
 }

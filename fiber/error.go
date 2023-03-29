@@ -1,8 +1,8 @@
 package fiber
 
 import (
+	"github.com/fraym/golog"
 	"github.com/gofiber/fiber/v2"
-	"github.com/sirupsen/logrus"
 )
 
 type Error struct {
@@ -25,7 +25,7 @@ func (e *Error) StatusCode() int {
 	return e.statusCode
 }
 
-func errorMiddleware(logger *logrus.Logger) fiber.Handler {
+func errorMiddleware(logger golog.Logger) fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		err := ctx.Next()
 		if err == nil {
@@ -37,7 +37,7 @@ func errorMiddleware(logger *logrus.Logger) fiber.Handler {
 			return err
 		}
 
-		logger.Error(fiberError)
+		logger.Error().WithError(err).Write()
 
 		ctx.Set(fiber.HeaderContentType, fiber.MIMETextPlainCharsetUTF8)
 

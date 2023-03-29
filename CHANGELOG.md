@@ -1,3 +1,8 @@
+# v1.0.0
+
+- (bc) Use golog instead of logrus
+- (bc) Remove CQRS package
+
 # v1.0.0-alpha.4
 
 - (feature) Set upload limit for files by environment variable HTTP_REQUEST_BODY_LIMIT

@@ -1,6 +1,6 @@
 # Logging
 
-We provide a preconfigured logging service (logrus).
+We provide a preconfigured logging service (golog).
 
 ```go
 logger := logging.New(env.New())

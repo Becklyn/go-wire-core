@@ -2,7 +2,6 @@ package graphql
 
 import (
 	"github.com/graphql-go/graphql"
-	"github.com/sirupsen/logrus"
 )
 
 type QueryObject struct {
@@ -57,7 +56,6 @@ type NewSchemaOptions struct {
 	Query        *QueryObject
 	Mutation     *MutationObject
 	Subscription *SubscriptionObject
-	Logger       *logrus.Logger
 }
 
 func NewSchema(options *NewSchemaOptions) (*graphql.Schema, error) {

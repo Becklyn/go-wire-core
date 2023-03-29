@@ -12,7 +12,6 @@ go get -u github.com/Becklyn/go-wire-core
 
 We provide packages for common use cases:
 
-- `cqrs`: Basic interfaces for apps that do cqrs
 - `env`: Environment variables processing
 - `fiber`: Webserver
 - `graphql`: GraphQL
@@ -35,5 +34,4 @@ The list of 3rd party libraries that we provide as packages by this package:
 - Fiber webserver - https://github.com/gofiber/fiber
 - GraphQL - https://github.com/graphql-go/graphql
 - gRPC - https://github.com/grpc/grpc-go
-- Logrus - https://github.com/sirupsen/logrus
 - Prometheus metrics - https://github.com/prometheus/client_golang

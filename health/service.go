@@ -3,7 +3,7 @@ package health
 import (
 	"sync"
 
-	"github.com/sirupsen/logrus"
+	"github.com/fraym/golog"
 )
 
 type componentStatus struct {
@@ -14,11 +14,11 @@ type componentStatus struct {
 type Service struct {
 	components map[string]componentStatus
 
-	logger *logrus.Logger
+	logger golog.Logger
 	mux    sync.RWMutex
 }
 
-func New(logger *logrus.Logger) *Service {
+func New(logger golog.Logger) *Service {
 	return &Service{
 		components: make(map[string]componentStatus),
 		logger:     logger,
@@ -59,9 +59,7 @@ func (s *Service) SetHealthy(component string) {
 	}
 	s.components[component] = componentHealth
 
-	s.logger.WithFields(logrus.Fields{
-		"component": component,
-	}).Warn("Component is healthy (again)")
+	s.logger.Warn().WithField("component", component).Write("Component is healthy (again)")
 }
 
 func (s *Service) SetUnhealthy(component string, reason string) {
@@ -74,8 +72,8 @@ func (s *Service) SetUnhealthy(component string, reason string) {
 	}
 	s.components[component] = componentHealth
 
-	s.logger.WithFields(logrus.Fields{
+	s.logger.Warn().WithFields(map[string]any{
 		"component": component,
 		"reason":    reason,
-	}).Warn("Component became unhealthy")
+	}).Write("Component became unhealthy")
 }

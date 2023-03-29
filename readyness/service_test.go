@@ -4,12 +4,12 @@ import (
 	"testing"
 
 	"github.com/Becklyn/go-wire-core/readyness"
-	"github.com/sirupsen/logrus"
+	"github.com/fraym/golog"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_IsReady_ReturnsHealthyByDefault(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := readyness.New(logger)
 
 	ready, _ := service.IsReady()
@@ -17,7 +17,7 @@ func Test_IsReady_ReturnsHealthyByDefault(t *testing.T) {
 }
 
 func Test_IsReady_ReturnsNoComponentByDefault(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := readyness.New(logger)
 
 	_, component := service.IsReady()
@@ -25,7 +25,7 @@ func Test_IsReady_ReturnsNoComponentByDefault(t *testing.T) {
 }
 
 func Test_IsReady_ForANewComponent_ReturnsNotReady(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := readyness.New(logger)
 
 	ready, _ := service.IsReady("foo")
@@ -33,7 +33,7 @@ func Test_IsReady_ForANewComponent_ReturnsNotReady(t *testing.T) {
 }
 
 func Test_IsReady_ForANewComponent_ReturnsComponent(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := readyness.New(logger)
 
 	_, component := service.IsReady("foo")
@@ -41,7 +41,7 @@ func Test_IsReady_ForANewComponent_ReturnsComponent(t *testing.T) {
 }
 
 func Test_IsReady_ReturnsNotReady_IfAnyComponentIsNotReady(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := readyness.New(logger)
 
 	service.Register("foo")
@@ -52,7 +52,7 @@ func Test_IsReady_ReturnsNotReady_IfAnyComponentIsNotReady(t *testing.T) {
 }
 
 func Test_IsReady_ForAReadyComponent_ReturnsReady(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := readyness.New(logger)
 
 	service.SetReady("foo")
@@ -62,7 +62,7 @@ func Test_IsReady_ForAReadyComponent_ReturnsReady(t *testing.T) {
 }
 
 func Test_IsReady_ForANotReadyComopnent_ReturnsNotReady(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := readyness.New(logger)
 
 	service.Register("foo")
@@ -72,7 +72,7 @@ func Test_IsReady_ForANotReadyComopnent_ReturnsNotReady(t *testing.T) {
 }
 
 func Test_IsReady_ForANotReadyComopnent_ReturnsComponent(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := readyness.New(logger)
 
 	service.SetReady("foo")

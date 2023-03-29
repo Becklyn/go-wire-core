@@ -4,12 +4,12 @@ import (
 	"testing"
 
 	"github.com/Becklyn/go-wire-core/health"
-	"github.com/sirupsen/logrus"
+	"github.com/fraym/golog"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_IsHealthy_ReturnsHealthyByDefault(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := health.New(logger)
 
 	healthy, _ := service.IsHealthy()
@@ -17,7 +17,7 @@ func Test_IsHealthy_ReturnsHealthyByDefault(t *testing.T) {
 }
 
 func Test_IsHealthy_ReturnsNoReasonByDefault(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := health.New(logger)
 
 	_, reason := service.IsHealthy()
@@ -25,7 +25,7 @@ func Test_IsHealthy_ReturnsNoReasonByDefault(t *testing.T) {
 }
 
 func Test_IsHealthy_ForAUnchangedComponent_ReturnsHealthy(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := health.New(logger)
 
 	healthy, _ := service.IsHealthy("foo")
@@ -33,7 +33,7 @@ func Test_IsHealthy_ForAUnchangedComponent_ReturnsHealthy(t *testing.T) {
 }
 
 func Test_IsHealthy_ForAUnchangedComponent_ReturnsNoReason(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := health.New(logger)
 
 	_, reason := service.IsHealthy("foo")
@@ -41,7 +41,7 @@ func Test_IsHealthy_ForAUnchangedComponent_ReturnsNoReason(t *testing.T) {
 }
 
 func Test_IsHealthy_ReturnsUnhealthy_IfAnyComponentIsUnhealthy(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := health.New(logger)
 
 	service.SetUnhealthy("foo", "can't foo without bar")
@@ -52,7 +52,7 @@ func Test_IsHealthy_ReturnsUnhealthy_IfAnyComponentIsUnhealthy(t *testing.T) {
 }
 
 func Test_IsHealthy_ForAHealthyComponent_ReturnsHealthy(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := health.New(logger)
 
 	service.SetHealthy("foo")
@@ -62,7 +62,7 @@ func Test_IsHealthy_ForAHealthyComponent_ReturnsHealthy(t *testing.T) {
 }
 
 func Test_IsHealthy_ForAnUnhelathyComopnent_ReturnsUnhealthy(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := health.New(logger)
 
 	service.SetUnhealthy("foo", "can't foo without bar")
@@ -72,7 +72,7 @@ func Test_IsHealthy_ForAnUnhelathyComopnent_ReturnsUnhealthy(t *testing.T) {
 }
 
 func Test_IsHealthy_ForAnUnhelathyComopnent_ReturnsReason(t *testing.T) {
-	logger := logrus.New()
+	logger := golog.NewZerologLogger()
 	service := health.New(logger)
 
 	service.SetUnhealthy("foo", "can't foo without bar")

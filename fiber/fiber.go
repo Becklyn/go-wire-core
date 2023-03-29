@@ -6,9 +6,9 @@ import (
 	"github.com/Becklyn/go-wire-core/app"
 	"github.com/Becklyn/go-wire-core/env"
 	"github.com/Becklyn/go-wire-core/metrics"
+	"github.com/fraym/golog"
 	"github.com/gofiber/fiber/v2"
 	fiberlog "github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/sirupsen/logrus"
 )
 
 type MiddlewareHandlerMap map[string][]fiber.Handler
@@ -18,7 +18,7 @@ func NewEmptyMiddlewareHandlerMap() *MiddlewareHandlerMap {
 }
 
 type NewFiberOptions struct {
-	Logger     *logrus.Logger
+	Logger     golog.Logger
 	Middleware *MiddlewareHandlerMap
 }
 
@@ -29,7 +29,7 @@ func NewFiber(options *NewFiberOptions) *fiber.App {
 
 	app.Use(fiberlog.New(fiberlog.Config{
 		Format: "${latency} - ${status} ${method} ${path}\n",
-		Output: options.Logger.WriterLevel(logrus.DebugLevel),
+		Output: options.Logger.Writer(golog.DebugLevel),
 	}))
 
 	app.Use(errorMiddleware(options.Logger))
@@ -57,7 +57,7 @@ func NewFiber(options *NewFiberOptions) *fiber.App {
 type UseFiberOptions struct {
 	Lifecycle *app.Lifecycle
 	Fiber     *fiber.App
-	Logger    *logrus.Logger
+	Logger    golog.Logger
 }
 
 func UseFiber(options *UseFiberOptions) {
@@ -66,7 +66,7 @@ func UseFiber(options *UseFiberOptions) {
 	options.Lifecycle.OnStart(func(ctx context.Context) error {
 		go func() {
 			if err := options.Fiber.Listen(addr); err != nil {
-				options.Logger.Fatal(err)
+				options.Logger.Fatal().WithError(err).Write()
 			}
 		}()
 

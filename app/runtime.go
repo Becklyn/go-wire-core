@@ -6,15 +6,15 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/sirupsen/logrus"
+	"github.com/fraym/golog"
 )
 
 type Runtime struct {
 	lifecycle *Lifecycle
-	logger    *logrus.Logger
+	logger    golog.Logger
 }
 
-func NewRuntime(lifecycle *Lifecycle, logger *logrus.Logger) *Runtime {
+func NewRuntime(lifecycle *Lifecycle, logger golog.Logger) *Runtime {
 	return &Runtime{
 		lifecycle: lifecycle,
 		logger:    logger,
@@ -29,21 +29,21 @@ func (a *Runtime) Start() {
 	defer stop()
 
 	if err := a.lifecycle.Start(ctx); err != nil {
-		a.logger.Error(err)
+		a.logger.Error().WithError(err).Write()
 		return
 	}
 
 	select {
 	case <-ctx.Done():
-		a.logger.Info("runtime context done")
+		a.logger.Info().Write("runtime context done")
 	case sig := <-sigChan:
-		a.logger.Infof("runtime received signal: %s", sig)
+		a.logger.Info().Writef("runtime received signal: %s", sig)
 	}
 
 	if err := a.lifecycle.Stop(); err != nil {
-		a.logger.Error(err)
+		a.logger.Error().WithError(err).Write()
 		return
 	}
-	a.logger.Info("runtime stopped")
+	a.logger.Info().Write("runtime stopped")
 	os.Exit(0)
 }
