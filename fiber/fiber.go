@@ -2,6 +2,7 @@ package fiber
 
 import (
 	"context"
+	"time"
 
 	"github.com/Becklyn/go-wire-core/app"
 	"github.com/Becklyn/go-wire-core/env"
@@ -74,6 +75,6 @@ func UseFiber(options *UseFiberOptions) {
 	})
 
 	options.Lifecycle.OnStop(func(ctx context.Context) error {
-		return options.Fiber.Shutdown()
+		return options.Fiber.ShutdownWithTimeout(3 * time.Second)
 	})
 }

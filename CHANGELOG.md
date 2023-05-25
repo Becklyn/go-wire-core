@@ -1,3 +1,9 @@
+# vNext
+
+# v1.0.2
+
+- (improvement) Force fiber shutdown after 3 seconds
+
 # v1.0.1
 
 - (internal) Adjust logger format by `LOG_FORMAT` env variable
