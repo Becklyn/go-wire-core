@@ -37,9 +37,17 @@ func NewFiber(options *NewFiberOptions) *fiber.App {
 	app.Use(errorMiddleware(options.Logger))
 	app.Use(metrics.NewFiberMiddleware())
 
-	if corsOrigins := env.StringWithDefault("CORS_ALLOW_ORIGINS", ""); corsOrigins != "" {
+	corsOrigins := env.StringWithDefault("CORS_ALLOW_ORIGINS", "")
+	corsHeaders := env.StringWithDefault("CORS_ALLOW_HEADERS", "")
+	corsExposeHeaders := env.StringWithDefault("CORS_EXPOSE_HEADERS", "")
+	corsCredentials := env.BoolWithDefault("CORS_ALLOW_CREDENTIALS", false)
+
+	if corsOrigins != "" || corsHeaders != "" || corsExposeHeaders != "" || corsCredentials {
 		app.Use(cors.New(cors.Config{
-			AllowOrigins: corsOrigins,
+			AllowOrigins:     corsOrigins,
+			AllowHeaders:     corsHeaders,
+			AllowCredentials: corsCredentials,
+			ExposeHeaders:    corsExposeHeaders,
 		}))
 	}
 

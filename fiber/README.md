@@ -50,6 +50,10 @@ func newMiddlewareMap() *MiddlewareHandlerMap {
 
 ### Used environment variables
 
-| variable name           | default | use                                   |
-| ----------------------- | ------- | ------------------------------------- |
-| HTTP_REQUEST_BODY_LIMIT | 4       | body size limit for all http requests |
+| variable name           | default | use                                                                              |
+| ----------------------- | ------- | -------------------------------------------------------------------------------- |
+| HTTP_REQUEST_BODY_LIMIT | 4       | body size limit for all http requests                                            |
+| CORS_ALLOW_ORIGINS      |         | list of allowed origins, example: `https://becklyn.com, https://www.becklyn.com` |
+| CORS_ALLOW_HEADERS      |         | list of allowed headers, example: `Content-Type, Accept`                         |
+| CORS_EXPOSE_HEADERS     |         | list of exposable headers, example: `Content-Type, Accept`                       |
+| CORS_ALLOW_CREDENTIALS  |         | bool that specifies if credentials are allowed                                   |
