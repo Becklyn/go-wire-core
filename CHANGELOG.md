@@ -1,5 +1,9 @@
 # vNext
 
+# v1.1.0
+
+- (feature) Specify allowed CORS origins by `CORS_ALLOW_ORIGINS` as string that contains the hosts list separated by `, ` symbols: `"https://becklyn.com, https://www.becklyn.com"`
+
 # v1.0.2
 
 - (improvement) Force fiber shutdown after 3 seconds

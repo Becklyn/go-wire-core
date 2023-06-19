@@ -9,6 +9,7 @@ import (
 	"github.com/Becklyn/go-wire-core/metrics"
 	"github.com/fraym/golog"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	fiberlog "github.com/gofiber/fiber/v2/middleware/logger"
 )
 
@@ -35,6 +36,12 @@ func NewFiber(options *NewFiberOptions) *fiber.App {
 
 	app.Use(errorMiddleware(options.Logger))
 	app.Use(metrics.NewFiberMiddleware())
+
+	if corsOrigins := env.StringWithDefault("CORS_ALLOW_ORIGINS", ""); corsOrigins != "" {
+		app.Use(cors.New(cors.Config{
+			AllowOrigins: corsOrigins,
+		}))
+	}
 
 	if options.Middleware != nil {
 		for path, handlers := range *options.Middleware {
