@@ -1,14 +1,19 @@
 # vNext
 
+# v.1.3.0
+
+- (feature) Add bytedance/sonic as default fiber json en-/decoder
+- (feature) Make json en-/decoder configurable with `FIBER_JSON_ENCODER` and `FIBER_JSON_DECODER`
+
 # v1.2.0
 
-- (feature) Specify allowed CORS headers by `CORS_ALLOW_HEADERS` as string that contains the headers list separated by `, ` symbols: `Content-Type, Accept`
-- (feature) Specify which headers to expose for CORS by `CORS_EXPOSE_HEADERS` as string that contains the headers list separated by `, ` symbols: `Content-Type, Accept`
+- (feature) Specify allowed CORS headers by `CORS_ALLOW_HEADERS` as string that contains the headers list separated by `,` symbols: `Content-Type, Accept`
+- (feature) Specify which headers to expose for CORS by `CORS_EXPOSE_HEADERS` as string that contains the headers list separated by `,` symbols: `Content-Type, Accept`
 - (feature) Specify if CORS are allowed to contain credentials by setting the `CORS_ALLOW_CREDENTIALS` env variable to true
 
 # v1.1.0
 
-- (feature) Specify allowed CORS origins by `CORS_ALLOW_ORIGINS` as string that contains the hosts list separated by `, ` symbols: `https://becklyn.com, https://www.becklyn.com`
+- (feature) Specify allowed CORS origins by `CORS_ALLOW_ORIGINS` as string that contains the hosts list separated by `,` symbols: `https://becklyn.com, https://www.becklyn.com`
 
 # v1.0.2
 
