@@ -2,15 +2,18 @@ package fiber
 
 import (
 	"context"
+	"encoding/json"
 	"time"
 
 	"github.com/Becklyn/go-wire-core/app"
 	"github.com/Becklyn/go-wire-core/env"
 	"github.com/Becklyn/go-wire-core/metrics"
+	"github.com/bytedance/sonic"
 	"github.com/fraym/golog"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	fiberlog "github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/utils"
 )
 
 type MiddlewareHandlerMap map[string][]fiber.Handler
@@ -25,8 +28,23 @@ type NewFiberOptions struct {
 }
 
 func NewFiber(options *NewFiberOptions) *fiber.App {
+	jsonEncoder := func() utils.JSONMarshal {
+		if env.StringWithDefault("FIBER_JSON_ENCODER", "sonic") == "sonic" {
+			return sonic.Marshal
+		}
+		return json.Marshal
+	}()
+	jsonDecoder := func() utils.JSONUnmarshal {
+		if env.StringWithDefault("FIBER_JSON_DECODER", "sonic") == "sonic" {
+			return sonic.Unmarshal
+		}
+		return json.Unmarshal
+	}()
+
 	app := fiber.New(fiber.Config{
-		BodyLimit: env.IntWithDefault("HTTP_REQUEST_BODY_LIMIT", 4) * 1024 * 1024,
+		BodyLimit:   env.IntWithDefault("HTTP_REQUEST_BODY_LIMIT", 4) * 1024 * 1024,
+		JSONEncoder: jsonEncoder,
+		JSONDecoder: jsonDecoder,
 	})
 
 	app.Use(fiberlog.New(fiberlog.Config{
