@@ -1,5 +1,9 @@
 # vNext
 
+# v1.3.2
+
+- (feature) Add validate mehtod to custom json un/marshall functions
+
 # v1.3.1
 
 - (feature) Add custom json un-/marshall functions
