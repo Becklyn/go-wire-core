@@ -23,6 +23,7 @@ require (
 	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
 	github.com/chenzhuoyu/iasm v0.9.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/klauspost/compress v1.16.3 // indirect

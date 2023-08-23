@@ -1,6 +1,11 @@
 # vNext
 
-# v.1.3.0
+# v1.3.1
+
+- (feature) Add custom json un-/marshall functions
+- (internal) Use goccy/go-json when Architecture is ARM64 instead of bytedance/sonic
+
+# v1.3.0
 
 - (feature) Add bytedance/sonic as default fiber json en-/decoder
 - (feature) Make json en-/decoder configurable with `FIBER_JSON_ENCODER` and `FIBER_JSON_DECODER`
