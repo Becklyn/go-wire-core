@@ -55,7 +55,20 @@ func New(lifecycle *app.Lifecycle, logger golog.Logger) *grpc.Server {
 	})
 
 	lifecycle.OnStop(func(ctx context.Context) error {
-		server.GracefulStop()
+		stopped := make(chan bool)
+		go func() {
+			server.GracefulStop()
+			close(stopped)
+		}()
+
+		t := time.NewTimer(5 * time.Second)
+		select {
+		case <-t.C:
+			server.Stop()
+		case <-stopped:
+			t.Stop()
+		}
+
 		return nil
 	})
 
