@@ -1,5 +1,9 @@
 # vNext
 
+# v1.4.2
+
+-   (bug) Fix grpc runtime stop
+
 # v1.4.1
 
 -   (bug) Fix grpc runtime stop

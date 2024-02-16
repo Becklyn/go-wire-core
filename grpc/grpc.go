@@ -54,7 +54,7 @@ func New(lifecycle *app.Lifecycle, logger golog.Logger) *grpc.Server {
 		return nil
 	})
 
-	lifecycle.OnStop(func(ctx context.Context) error {
+	lifecycle.OnStopLast(func(ctx context.Context) error {
 		stopped := make(chan bool)
 		go func() {
 			server.GracefulStop()
