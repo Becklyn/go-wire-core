@@ -1,8 +1,10 @@
 package health
 
 import (
+	"context"
 	"sync"
 
+	"github.com/Becklyn/go-wire-core/app"
 	"github.com/fraym/golog"
 )
 
@@ -18,11 +20,18 @@ type Service struct {
 	mux    sync.RWMutex
 }
 
-func New(logger golog.Logger) *Service {
-	return &Service{
+func New(logger golog.Logger, lifecycle *app.Lifecycle) *Service {
+	s := &Service{
 		components: make(map[string]componentStatus),
 		logger:     logger,
 	}
+
+	lifecycle.OnStop(func(ctx context.Context) error {
+		s.SetUnhealthy("lifecycle", "Service is shutting down")
+		return nil
+	})
+
+	return s
 }
 
 func (s *Service) isHealthy() (bool, string) {
