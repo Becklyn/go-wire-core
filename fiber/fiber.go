@@ -6,6 +6,7 @@ import (
 
 	"github.com/Becklyn/go-wire-core/app"
 	"github.com/Becklyn/go-wire-core/env"
+	"github.com/Becklyn/go-wire-core/json"
 	"github.com/Becklyn/go-wire-core/metrics"
 	"github.com/fraym/golog"
 	"github.com/gofiber/fiber/v2"
@@ -26,7 +27,9 @@ type NewFiberOptions struct {
 
 func NewFiber(options *NewFiberOptions) *fiber.App {
 	app := fiber.New(fiber.Config{
-		BodyLimit: env.IntWithDefault("HTTP_REQUEST_BODY_LIMIT", 4) * 1024 * 1024,
+		BodyLimit:   env.IntWithDefault("HTTP_REQUEST_BODY_LIMIT", 4) * 1024 * 1024,
+		JSONEncoder: json.Marshal,
+		JSONDecoder: json.Unmarshal,
 	})
 
 	app.Use(fiberlog.New(fiberlog.Config{
