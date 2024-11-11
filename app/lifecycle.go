@@ -5,9 +5,10 @@ import "context"
 type LifecycleHook func(ctx context.Context) error
 
 type Lifecycle struct {
-	onStart    []LifecycleHook
-	onStop     []LifecycleHook
-	onStopLast []LifecycleHook
+	onStart     []LifecycleHook
+	onStopFirst []LifecycleHook
+	onStop      []LifecycleHook
+	onStopLast  []LifecycleHook
 }
 
 func NewLifecycle() *Lifecycle {
@@ -26,6 +27,12 @@ func (l *Lifecycle) Start(ctx context.Context) error {
 
 func (l *Lifecycle) Stop() error {
 	ctx := context.Background()
+
+	for _, hook := range l.onStopFirst {
+		if err := hook(ctx); err != nil {
+			return err
+		}
+	}
 
 	for _, hook := range l.onStop {
 		if err := hook(ctx); err != nil {
@@ -48,6 +55,10 @@ func (l *Lifecycle) OnStart(hook LifecycleHook) {
 
 func (l *Lifecycle) OnStop(hook LifecycleHook) {
 	l.onStop = append(l.onStop, hook)
+}
+
+func (l *Lifecycle) OnStopFirst(hook LifecycleHook) {
+	l.onStopFirst = append(l.onStopFirst, hook)
 }
 
 func (l *Lifecycle) OnStopLast(hook LifecycleHook) {

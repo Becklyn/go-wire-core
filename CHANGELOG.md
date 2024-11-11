@@ -1,5 +1,9 @@
 # vNext
 
+# v1.4.4
+
+- (bug) Fix integration of Lifecycle and health
+
 # v1.4.3
 
 - (improvement) Initialize json implementation on startup

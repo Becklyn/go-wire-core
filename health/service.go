@@ -26,7 +26,7 @@ func New(logger golog.Logger, lifecycle *app.Lifecycle) *Service {
 		logger:     logger,
 	}
 
-	lifecycle.OnStop(func(ctx context.Context) error {
+	lifecycle.OnStopFirst(func(ctx context.Context) error {
 		s.SetUnhealthy("lifecycle", "Service is shutting down")
 		return nil
 	})
