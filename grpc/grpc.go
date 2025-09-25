@@ -28,8 +28,10 @@ func New(lifecycle *app.Lifecycle, logger golog.Logger) *grpc.Server {
 	}
 
 	keepaliveOptions := grpc.KeepaliveParams(keepalive.ServerParameters{
-		Time:    time.Minute,
-		Timeout: 3 * time.Second,
+		Time:              time.Minute,
+		Timeout:           3 * time.Second,
+		MaxConnectionIdle: 15 * time.Minute, // Close idle connections after 15 minutes
+		MaxConnectionAge:  30 * time.Minute, // Force connection refresh after 30 minutes
 	})
 
 	keepaliveEnforcementOptions := grpc.KeepaliveEnforcementPolicy(keepalive.EnforcementPolicy{
@@ -40,6 +42,11 @@ func New(lifecycle *app.Lifecycle, logger golog.Logger) *grpc.Server {
 	server := grpc.NewServer(
 		keepaliveOptions,
 		keepaliveEnforcementOptions,
+		grpc.InitialWindowSize(1024*1024),     // 1MB initial window size
+		grpc.InitialConnWindowSize(1024*1024), // 1MB initial connection window size
+		grpc.MaxRecvMsgSize(16*1024*1024),     // 16MB max receive message size
+		grpc.MaxSendMsgSize(16*1024*1024),     // 16MB max send message size
+		grpc.MaxConcurrentStreams(1000),
 	)
 
 	lifecycle.OnStart(func(ctx context.Context) error {

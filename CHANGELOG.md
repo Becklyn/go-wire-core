@@ -1,5 +1,9 @@
 # vNext
 
+# v1.4.5
+
+- (improvement) Improve grpc server settings
+
 # v1.4.4
 
 - (bug) Fix integration of Lifecycle and health
