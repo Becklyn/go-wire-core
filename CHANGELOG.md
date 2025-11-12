@@ -1,5 +1,9 @@
 # vNext
 
+# v1.4.6
+
+- (improvement) Set max send message size to 256MB for grpc server
+
 # v1.4.5
 
 - (improvement) Improve grpc server settings

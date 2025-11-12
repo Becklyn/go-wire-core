@@ -45,7 +45,7 @@ func New(lifecycle *app.Lifecycle, logger golog.Logger) *grpc.Server {
 		grpc.InitialWindowSize(1024*1024),     // 1MB initial window size
 		grpc.InitialConnWindowSize(1024*1024), // 1MB initial connection window size
 		grpc.MaxRecvMsgSize(16*1024*1024),     // 16MB max receive message size
-		grpc.MaxSendMsgSize(16*1024*1024),     // 16MB max send message size
+		grpc.MaxSendMsgSize(256*1024*1024),    // 256MB max send message size
 		grpc.MaxConcurrentStreams(1000),
 	)
 
